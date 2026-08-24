@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cek Ruang Ujian STS 2026/2027 - SMPM 12 GKB Gresik</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Inter & Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-heading { font-family: 'Montserrat', sans-serif; }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between relative overflow-x-hidden">
+
+  <!-- Background Glow & Accent Orbs -->
+  <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[140px] pointer-events-none"></div>
+  <div class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-amber-500/15 rounded-full blur-[120px] pointer-events-none"></div>
+
+<!-- Header Section -->
+  <header class="p-6 max-w-7xl mx-auto w-full flex justify-between items-center relative z-10">
+    <div class="flex items-center gap-4">
+      <!-- Container Logo Sekolah -->
+      <div class="w-12 h-12 rounded-2xl bg-slate-900 border border-slate-800 p-1.5 shadow-lg shadow-blue-900/40 flex items-center justify-center overflow-hidden">
+        <img 
+          src="logo.png" 
+          alt="Logo SMP Muhammadiyah 12 GKB" 
+          class="w-full h-full object-contain"
+        >
+      </div>
+      <div>
+        <h1 class="font-heading font-bold text-base md:text-lg text-white leading-tight">SMP MUHAMMADIYAH 12 GKB GRESIK</h1>
+        <p class="text-xs text-slate-400 font-medium">Berprestasi, Berbudi, & Peduli</p>
+      </div>
+    </div>
+    <span class="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">
+      <span class="w-2 h-2 rounded-full bg-blue-400 animate-ping"></span> Portal STS Ganjil 2026/2027
+    </span>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-3xl mx-auto px-6 py-8 w-full text-center relative z-10 my-auto">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-800 text-[24px] font-semibold text-yellow-400 mb-6 shadow-inner">
+      Pengumuman Ruang Ujian
+    </div>
+    <h2 class="font-heading text-3xl md:text-5xl font-extrabold tracking-tight mb-4 text-white">
+      Sumatif Tengah Semester
+    </h2>
+    <p class="text-amber-400/90 font-medium text-sm md:text-base mb-2">Tahun Ajaran 2026 / 2027</p>
+    <p class="text-slate-400 text-xs md:text-sm max-w-md mx-auto mb-8">
+      Silakan masukkan Nomor Induk Siswa (NIS) untuk melihat alokasi ruang ujian, nomor meja, dan jadwal pelaksanaan.
+    </p>
+
+    <!-- Form Search Box -->
+    <div class="glass-card p-6 md:p-8 rounded-3xl shadow-2xl relative border border-slate-800">
+      <form id="searchForm" onsubmit="handleSearch(event)" class="space-y-4">
+        <div class="text-left">
+          <label for="nisInput" class="block text-xs font-semibold text-slate-300 mb-2 uppercase tracking-wider">
+            Nomor Induk Siswa (NIS)
+          </label>
+          <input 
+            type="text" 
+            id="nisInput" 
+            placeholder="Contoh: 260001" 
+            required
+            class="w-full px-5 py-4 rounded-2xl bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all font-mono text-base tracking-widest text-center md:text-left"
+          >
+        </div>
+        
+        <button 
+          type="submit" 
+          id="submitBtn"
+          class="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-500 to-amber-500 hover:from-blue-700 hover:to-amber-600 font-bold text-white shadow-xl shadow-blue-600/25 transition-all transform active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <span id="btnText">Cek Ruang Ujian</span>
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Modal Pop-Up Hasil Pencarian -->
+  <div id="resultModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md hidden items-center justify-center p-4 md:p-6 z-50 overflow-y-auto">
+    
+    <div class="glass-card max-w-xl w-full rounded-3xl p-5 md:p-6 relative border border-slate-700/70 shadow-2xl my-auto">
+      
+      <!-- Close Button -->
+      <button 
+        onclick="closeModal()" 
+        class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-full hover:bg-slate-800 transition-all z-20 cursor-pointer"
+      >
+        ✕
+      </button>
+
+      <!-- Modal Content Header -->
+      <div class="text-center space-y-1 mb-4 relative">
+        <h3 class="text-sm md:text-base font-heading font-extrabold text-amber-400 tracking-wider">
+          KARTU PESERTA
+          <p>SUMATIF TENGAH SEMESTER GANJIL</p>
+        </h3>
+        <p class="text-xs text-slate-400 font-mono">Tahun Ajaran 2026-2027</p>
+        <p class="text-xs text-slate-400 font-mono">SMP MUHAMMADIYAH 12 GKB GRESIK</p>
+        
+      <P>
+        <h3 class="text-xl font-heading font-bold text-white pt-1" id="studentName">-</h3>
+      <p>
+
+        <!-- Tabel NIS & No Bangku -->
+        <table class="text-xs text-slate-400 font-mono mx-auto my-2">
+          <tr>
+            <td class="pr-2 py-0.5 text-left">NIS</td>
+            <td class="px-1 py-0.5">:</td>
+            <td class="py-0.5 text-slate-200 font-semibold text-left" id="studentNis">-</td>
+          </tr>
+          <tr>
+            <td class="pr-2 py-0.5 text-left">Kelas</td>
+            <td class="px-1 py-0.5">:</td>
+            <td class="py-0.5 text-slate-200 font-semibold text-left" id="studentClass">-</td>
+          </tr>
+          <tr>
+            <td class="pr-2 py-0.5 text-left">No Bangku</td>
+            <td class="px-1 py-0.5">:</td>
+            <td class="py-0.5 text-slate-200 font-semibold text-left" id="studentSeat">-</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Detail Ruang, Nama Ruang, & Username -->
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <div class="bg-blue-950/50 border border-blue-800/40 p-3 rounded-xl text-center flex flex-col justify-center">
+          <span class="text-[10px] uppercase font-bold text-blue-300 block mb-0.5">Ruang Ujian</span>
+          <span class="text-xl font-heading font-extrabold text-amber-400 block" id="roomNumber">-</span>
+          <span class="text-[11px] text-slate-300 font-medium mt-0.5" id="roomName">-</span>
+        </div>
+        <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-xl text-center flex flex-col justify-center">
+          <span class="text-[10px] uppercase font-bold text-slate-400 block mb-0.5">Username</span>
+          <span class="text-xl font-heading font-extrabold text-white block" id="studentUser">-</span>
+          <span class="text-[11px] text-slate-300">User virtual class/DMU</span>
+        </div>
+      </div>
+
+      <!-- Jadwal Ujian STS -->
+      <div class="bg-slate-900/90 rounded-xl p-3 border border-slate-700/80 shadow-inner mb-4">
+        <div class="flex items-center justify-between mb-2 px-1">
+          <div class="flex items-center gap-1.5">
+            <span class="w-1.5 h-3 bg-red-600 rounded-full"></span>
+            <h4 class="text-xs font-bold text-slate-200 tracking-wide uppercase">Hal-hal yang harus diperhatikan</h4>
+          </div>
+        </div>
+          <!-- Catatan -->
+        <ol class="list-decimal list-inside text-xs text-slate-300 leading-relaxed space-y-1 px-1">
+          <li>Unduh dan cetak kartu ujian ukuran A5.</li>
+          <li>Kartu harap dibawa saat ujian berlangsung.</li>
+        </ol>
+
+      </div>
+
+      <!-- Tombol Link Download Berdasarkan Spreadsheet -->
+      <div id="actionArea">
+        <a 
+          id="downloadBtnLink" 
+          href="#" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="w-full py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold transition-all shadow-lg shadow-amber-400/20 flex items-center justify-center gap-2 text-sm cursor-pointer"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Unduh Kartu Ujian
+        </a>
+      </div>
+      
+            <!-- Footer Khusus Modal Pop-Up -->
+      <div class="mt-5 pt-3 border-t border-slate-800 text-center">
+        <p class="text-[11px] text-slate-400 font-medium">Sistem Informasi Sekretariat</p>
+        <p class="text-[10px] text-slate-500 mt-0.5">© 2026 SMP Muhammadiyah 12 GKB</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="p-6 text-center text-xs text-slate-500 relative z-10 border-t border-slate-900/80">
+    <p>© 2026 SMP Muhammadiyah 12 GKB Gresik</p>
+    <p class="mt-1 text-[11px] text-slate-600">Sistem Informasi Sekretariat Spemdalas</p>
+  </footer>
+
+  <!-- JavaScript Integration -->
+  <script>
+    // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
+    const SPREADSHEET_API_URL = "https://script.google.com/macros/s/AKfycbwGkrm8gtOKoAh_yWAQCcduJnIpA0-mvvtvBsQk0q8Gd9jl_EKFmlDw6QIb_sz5IllQ/exec";
+
+    async function handleSearch(e) {
+      e.preventDefault();
+      const nisInput = document.getElementById('nisInput').value.trim();
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = document.getElementById('btnText');
+
+      // Tampilan Loading
+      btnText.innerText = 'Mencari Data...';
+      submitBtn.disabled = true;
+
+      try {
+        const response = await fetch(`${SPREADSHEET_API_URL}?nis=${encodeURIComponent(nisInput)}`);
+        const data = await response.json();
+
+        if (data.status === "success") {
+          // Update data teks modal
+          document.getElementById('studentName').innerText = data.nama;
+          document.getElementById('studentNis').innerText = data.nis;
+          document.getElementById('studentSeat').innerText = data.noBangku;
+          document.getElementById('studentClass').innerText = data.kelas;
+          document.getElementById('roomNumber').innerText = data.ruangan;
+          
+          // Menampilkan Nama/Lokasi Ruang (misal: "Lab Komputer 1", "Ruang Kelas 9A", dll)
+          document.getElementById('roomName').innerText = data.namaRuang || data.lokasiRuang || "";
+
+          document.getElementById('studentUser').innerText = data.username;
+
+          // Set URL tombol Unduh dari Spreadsheet (Kolom H)
+// Set URL tombol Unduh dari Spreadsheet
+          const downloadBtnLink = document.getElementById('downloadBtnLink');
+          
+          if (data.downloadUrl && data.downloadUrl.trim() !== "") {
+            let fileUrl = data.downloadUrl.trim();
+
+            // Ubah link Google Drive (view/edit) menjadi direct download link secara otomatis
+            if (fileUrl.includes("drive.google.com") && fileUrl.includes("/d/")) {
+              const fileId = fileUrl.split("/d/")[1].split("/")[0];
+              fileUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+            }
+
+            downloadBtnLink.href = fileUrl;
+            downloadBtnLink.setAttribute('download', ''); // Memicu atribut download HTML5
+            
+            // Handler klik untuk memaksa pengunduhan otomatis
+            downloadBtnLink.onclick = function(e) {
+              e.preventDefault();
+
+              // Jika link berasal dari Google Drive, buka direct download di window baru
+              if (fileUrl.includes("drive.google.com")) {
+                window.open(fileUrl, '_blank');
+              } else {
+                // Untuk file URL langsung (PDF, PNG, JPG, dll)
+                fetch(fileUrl)
+                  .then(response => response.blob())
+                  .then(blob => {
+                    const blobUrl = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = blobUrl;
+                    a.download = `Kartu_Ujian_${data.nis || 'Peserta'}.pdf`; // Nama file output
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(blobUrl);
+                  })
+                  .catch(() => {
+                    // Fallback jika terjadi CORS restriction: buka di tab baru untuk diunduh browser
+                    window.open(fileUrl, '_blank');
+                  });
+              }
+            };
+
+            downloadBtnLink.classList.remove('hidden');
+          } else {
+            downloadBtnLink.href = "#";
+            downloadBtnLink.onclick = null;
+            downloadBtnLink.classList.add('hidden'); // Sembunyikan jika URL tidak tersedia
+          }
+
+          // Tampilkan Modal
+          const modal = document.getElementById('resultModal');
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+        } else {
+          alert("NIS tidak ditemukan. Silakan periksa kembali nomor yang dimasukkan.");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        alert("Gagal mengambil data dari server. Pastikan URL Apps Script sudah terpasang dengan benar.");
+      } finally {
+        btnText.innerText = 'Cek Ruang Ujian';
+        submitBtn.disabled = false;
+      }
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('resultModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+  </script>
+</body>
+</html>
